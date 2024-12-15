@@ -1,5 +1,5 @@
 import { renderTasks } from './renderTasks.js'
-import { tasks } from './tasks.js'
+import { updateTasks } from './tasks.js'
 
 export const initDeleteListeners = () => {
     const deleteElements = document.querySelectorAll('.delete')
@@ -7,9 +7,18 @@ export const initDeleteListeners = () => {
     for (const deleteElement of deleteElements) {
         deleteElement.addEventListener('click', (event) => {
             event.stopPropagation()
-            const index = deleteElement.dataset.index
-            tasks.splice(index, 1)
-            renderTasks()
+            const id = deleteElement.dataset.id
+
+            fetch(`https://wedev-api.sky.pro/api/todos/${id}`, {
+                method: 'DELETE',
+            })
+                .then((response) => {
+                    return response.json()
+                })
+                .then((data) => {
+                    updateTasks(data.todos)
+                    renderTasks()
+                })
         })
     }
 }
