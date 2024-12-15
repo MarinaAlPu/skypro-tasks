@@ -1,7 +1,14 @@
 import { renderTasks } from './modules/renderTasks.js'
-import { tasks } from './modules/tasks.js'
+import { tasks, updateTasks } from './modules/tasks.js'
 
-renderTasks()
+fetch('https://wedev-api.sky.pro/api/todos')
+    .then((response) => {
+        return response.json()
+    })
+    .then((data) => {
+        updateTasks(data.todos)
+        renderTasks()
+    })
 
 const button = document.getElementById('add')
 const input = document.getElementById('field')
