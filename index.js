@@ -1,5 +1,5 @@
 import { renderTasks } from './modules/renderTasks.js'
-import { tasks, updateTasks } from './modules/tasks.js'
+import { updateTasks } from './modules/tasks.js'
 
 fetch('https://wedev-api.sky.pro/api/todos')
     .then((response) => {
@@ -25,9 +25,17 @@ button.addEventListener('click', () => {
         text: input.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
     }
 
-    tasks.push(newTask)
+    fetch('https://wedev-api.sky.pro/api/todos', {
+        method: 'POST',
+        body: JSON.stringify(newTask),
+    })
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            updateTasks(data.todos)
+            renderTasks()
+        })
 
     input.value = ''
-
-    renderTasks()
 })
