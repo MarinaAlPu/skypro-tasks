@@ -29,6 +29,9 @@ button.addEventListener('click', () => {
         method: 'POST',
         body: JSON.stringify(newTask),
     })
+        .then(() => {
+            return fetch('https://wedev-api.sky.pro/api/todos')
+        })
         .then((response) => {
             return response.json()
         })
