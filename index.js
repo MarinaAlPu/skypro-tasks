@@ -36,6 +36,8 @@ button.addEventListener('click', () => {
             return response.json()
         })
         .then((data) => {
+            input.value = ''
+
             updateTasks(data.todos)
             renderTasks()
         })
