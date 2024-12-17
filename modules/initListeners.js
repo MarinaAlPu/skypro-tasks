@@ -9,6 +9,9 @@ export const initDeleteListeners = () => {
             event.stopPropagation()
             const id = deleteElement.dataset.id
 
+            deleteElement.disabled = true
+            deleteElement.textContent = 'Задача удаляется...'
+
             fetch(`https://wedev-api.sky.pro/api/todos/${id}`, {
                 method: 'DELETE',
             })
@@ -19,6 +22,9 @@ export const initDeleteListeners = () => {
                     return response.json()
                 })
                 .then((data) => {
+                    deleteElement.disabled = false
+                    deleteElement.textContent = 'Удалить'
+
                     updateTasks(data.todos)
                     renderTasks()
                 })

@@ -25,6 +25,9 @@ button.addEventListener('click', () => {
         text: input.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
     }
 
+    button.disabled = true
+    button.textContent = 'создание задачи...'
+
     fetch('https://wedev-api.sky.pro/api/todos', {
         method: 'POST',
         body: JSON.stringify(newTask),
@@ -37,6 +40,9 @@ button.addEventListener('click', () => {
         })
         .then((data) => {
             input.value = ''
+
+            button.disabled = false
+            button.textContent = 'Добавить'
 
             updateTasks(data.todos)
             renderTasks()
