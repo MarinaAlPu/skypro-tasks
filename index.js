@@ -33,6 +33,4 @@ button.addEventListener('click', () => {
             button.disabled = false
             button.textContent = 'Добавить'
         })
-
-    input.value = ''
 })
