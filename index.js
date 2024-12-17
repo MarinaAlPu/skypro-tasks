@@ -1,14 +1,6 @@
-import { renderTasks } from './modules/renderTasks.js'
-import { updateTasks } from './modules/tasks.js'
+import { fetchAndRenderTasks } from './modules/fetchAndRenderTasks.js'
 
-fetch('https://wedev-api.sky.pro/api/todos')
-    .then((response) => {
-        return response.json()
-    })
-    .then((data) => {
-        updateTasks(data.todos)
-        renderTasks()
-    })
+fetchAndRenderTasks()
 
 const button = document.getElementById('add')
 const input = document.getElementById('field')
@@ -33,19 +25,13 @@ button.addEventListener('click', () => {
         body: JSON.stringify(newTask),
     })
         .then(() => {
-            return fetch('https://wedev-api.sky.pro/api/todos')
+            return fetchAndRenderTasks()
         })
-        .then((response) => {
-            return response.json()
-        })
-        .then((data) => {
+        .then(() => {
             input.value = ''
 
             button.disabled = false
             button.textContent = 'Добавить'
-
-            updateTasks(data.todos)
-            renderTasks()
         })
 
     input.value = ''

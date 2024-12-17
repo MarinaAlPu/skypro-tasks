@@ -1,5 +1,4 @@
-import { renderTasks } from './renderTasks.js'
-import { updateTasks } from './tasks.js'
+import { fetchAndRenderTasks } from './fetchAndRenderTasks.js'
 
 export const initDeleteListeners = () => {
     const deleteElements = document.querySelectorAll('.delete')
@@ -16,17 +15,11 @@ export const initDeleteListeners = () => {
                 method: 'DELETE',
             })
                 .then(() => {
-                    return fetch('https://wedev-api.sky.pro/api/todos')
+                    return fetchAndRenderTasks()
                 })
-                .then((response) => {
-                    return response.json()
-                })
-                .then((data) => {
+                .then(() => {
                     deleteElement.disabled = false
                     deleteElement.textContent = 'Удалить'
-
-                    updateTasks(data.todos)
-                    renderTasks()
                 })
         })
     }
