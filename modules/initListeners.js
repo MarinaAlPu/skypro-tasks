@@ -12,6 +12,9 @@ export const initDeleteListeners = () => {
             fetch(`https://wedev-api.sky.pro/api/todos/${id}`, {
                 method: 'DELETE',
             })
+                .then(() => {
+                    return fetch('https://wedev-api.sky.pro/api/todos')
+                })
                 .then((response) => {
                     return response.json()
                 })
