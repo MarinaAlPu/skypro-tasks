@@ -29,7 +29,11 @@ button.addEventListener('click', () => {
         })
         .then(() => {
             input.value = ''
-
+        })
+        .catch(() => {
+            alert('Что-то пошло не так')
+        })
+        .finally(() => {
             button.disabled = false
             button.textContent = 'Добавить'
         })
