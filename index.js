@@ -24,6 +24,21 @@ button.addEventListener('click', () => {
         method: 'POST',
         body: JSON.stringify(newTask),
     })
+        .then((response) => {
+            if (response.status === 201) {
+                return response.json()
+            } else {
+                if (response.status === 500) {
+                    throw new Error('Сервер упал')
+                }
+
+                if (response.status == 400) {
+                    throw new Error('Вы допустили ошибку')
+                }
+
+                throw new Error('что-то пошло не так')
+            }
+        })
         .then(() => {
             return fetchAndRenderTasks()
         })
