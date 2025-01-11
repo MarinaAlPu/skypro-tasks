@@ -1,3 +1,6 @@
+import { login, updateToken } from './api.js'
+import { fetchAndRenderTasks } from './fetchAndRenderTasks.js'
+
 export const renderLogin = () => {
     const app = document.getElementById('app')
 
@@ -18,4 +21,20 @@ export const renderLogin = () => {
       <button class="button" id="login-button">Войти</button>
      <button class="button" id="reg-button">Зарегистрироваться</button>
     `
+
+    const button = document.getElementById('login-button')
+
+    const loginElement = document.getElementById('login-input')
+
+    const passwordElement = document.getElementById('password-input')
+
+    button.addEventListener('click', () => {
+        login({
+            login: loginElement.value,
+            password: passwordElement.value,
+        }).then((data) => {
+            updateToken(data.user.token)
+            fetchAndRenderTasks()
+        })
+    })
 }

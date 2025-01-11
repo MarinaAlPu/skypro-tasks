@@ -1,3 +1,4 @@
+import { deleteTodo, postTodo } from './api.js'
 import { fetchAndRenderTasks } from './fetchAndRenderTasks.js'
 
 export const initDeleteListeners = () => {
@@ -11,9 +12,7 @@ export const initDeleteListeners = () => {
             deleteElement.disabled = true
             deleteElement.textContent = 'Задача удаляется...'
 
-            fetch(`https://wedev-api.sky.pro/api/todos/${id}`, {
-                method: 'DELETE',
-            })
+            deleteTodo({ id })
                 .then(() => {
                     return fetchAndRenderTasks()
                 })
@@ -44,10 +43,7 @@ export const initiAddTaskListener = () => {
         button.disabled = true
         button.textContent = 'создание задачи...'
 
-        fetch('https://wedev-api.sky.pro/api/todos', {
-            method: 'POST',
-            body: JSON.stringify(newTask),
-        })
+        postTodo(newTask)
             .then((response) => {
                 if (response.status === 201) {
                     return response.json()
