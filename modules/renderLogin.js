@@ -1,5 +1,6 @@
 import { login, updateToken } from './api.js'
 import { fetchAndRenderTasks } from './fetchAndRenderTasks.js'
+import { renderRegistration } from './renderRegistration.js'
 
 export const renderLogin = () => {
     const app = document.getElementById('app')
@@ -36,5 +37,11 @@ export const renderLogin = () => {
             updateToken(data.user.token)
             fetchAndRenderTasks()
         })
+    })
+
+    const buttonReg = document.getElementById('reg-button')
+
+    buttonReg.addEventListener('click', () => {
+        renderRegistration()
     })
 }

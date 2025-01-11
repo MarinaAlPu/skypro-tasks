@@ -24,7 +24,7 @@ export const initDeleteListeners = () => {
     }
 }
 
-export const initiAddTaskListener = () => {
+export const initAddTaskListener = () => {
     const button = document.getElementById('add')
     const input = document.getElementById('field')
 

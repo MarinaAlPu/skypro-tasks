@@ -1,3 +1,6 @@
+import { registration, updateToken } from './api.js'
+import { fetchAndRenderTasks } from './fetchAndRenderTasks.js'
+
 export const renderRegistration = () => {
     const app = document.getElementById('app')
 
@@ -19,4 +22,21 @@ export const renderRegistration = () => {
       <button class="button" id="login-button">Зарегистрироваться</button>
 
     `
+
+    const button = document.getElementById('login-button')
+
+    const loginElement = document.getElementById('login-input')
+    const nameElement = document.getElementById('name-input')
+    const passwordElement = document.getElementById('password-input')
+
+    button.addEventListener('click', () => {
+        registration({
+            login: loginElement.value,
+            name: nameElement.value,
+            password: passwordElement.value,
+        }).then((data) => {
+            updateToken(data.user.token)
+            fetchAndRenderTasks()
+        })
+    })
 }
