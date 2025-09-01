@@ -1,12 +1,18 @@
-const host = 'https://wedev-api.sky.pro/api/v2/todos'
+const host = 'https://wedev-api.sky.pro/api/v2/todos';
+const authTUrl =  'https://wedev-api.sky.pro/api/user';
 
-const token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k'
+let token = '';
+
+export const updateToken = (newToken) => {
+    token = newToken
+}
+
 
 export function getTodos() {
     return fetch(host, {
         method: 'GET',
         headers: {
-            Authorization: token,
+            Authorization: `Bearer ${token}`,
         },
     }).then((response) => {
         return response.json()
@@ -17,7 +23,7 @@ export function deleteTodo({ id }) {
     return fetch(`${host}/${id}`, {
         method: 'DELETE',
         headers: {
-            Authorization: token,
+            Authorization: `Bearer ${token}`,
         },
     }).then((response) => {
         return response.json()
@@ -28,7 +34,7 @@ export function postTodo({ text }) {
     return fetch(host, {
         method: 'POST',
         headers: {
-            Authorization: token,
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
             text,
@@ -37,3 +43,29 @@ export function postTodo({ text }) {
         return response.json()
     })
 }
+
+export function login({ login, password }) {
+    return fetch(`${authTUrl}/login`, {
+        method: 'POST',
+        body: JSON.stringify({
+            login,
+            password
+        }),
+    }).then((response) => {
+        return response.json()
+    })
+}
+
+export function registration({ login, name, password }) {
+    return fetch(authTUrl, {
+        method: 'POST',
+        body: JSON.stringify({
+            login,
+            name,
+            password
+        }),
+    }).then((response) => {
+        return response.json()
+    })
+}
+
