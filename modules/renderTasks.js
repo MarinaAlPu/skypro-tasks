@@ -1,5 +1,5 @@
 import { tasks } from './tasks.js'
-import { initDeleteListeners } from './initListeners.js'
+import { initAddTaskListener, initDeleteListeners } from './initListeners.js'
 
 export const renderTasks = () => {
     const app = document.getElementById('app')
@@ -24,4 +24,5 @@ export const renderTasks = () => {
     app.innerHTML = appHtml
 
     initDeleteListeners()
+    initAddTaskListener()
 }

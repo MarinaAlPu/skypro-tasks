@@ -1,7 +1,12 @@
+import { login, updateToken } from "./api.js";
+import { fetchAndRenderTasks } from "./fetchAndRenderTasks.js";
+import { renderRegistration } from "./renderRegistration.js";
+
+
 export const renderLogin = () => {
   const app = document.getElementById("app");
 
-  app.innerHtml = `
+  app.innerHTML = `
   <h1>Страница входа</h1>
   <div class="form">
       <h3 class="form-title">Форма входа</h3>
@@ -28,10 +33,16 @@ export const renderLogin = () => {
       password: passwordElement.value,
     })
       .then((responseData) => {
-        console.log(responseData);
+        // console.log(responseData);
         // console.log(responseData.user.token);
-        // updateToken(responseData.user.token);
-        // fetchAndRenderTasks();
+        updateToken(responseData.user.token);
+        fetchAndRenderTasks();
       })
+  })
+
+  const buttonReg = document.getElementById("reg-button");
+
+  buttonReg.addEventListener("click", () => {
+    renderRegistration();
   })
 }

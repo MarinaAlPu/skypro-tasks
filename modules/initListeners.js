@@ -1,3 +1,4 @@
+import { deleteTodo, getTodos } from './api.js'
 import { fetchAndRenderTasks } from './fetchAndRenderTasks.js'
 
 export const initDeleteListeners = () => {
@@ -11,9 +12,10 @@ export const initDeleteListeners = () => {
             deleteElement.disabled = true
             deleteElement.textContent = 'Задача удаляется...'
 
-            fetch(`https://wedev-api.sky.pro/api/todos/${id}`, {
-                method: 'DELETE',
-            })
+            // fetch(`https://wedev-api.sky.pro/api/todos/${id}`, {
+            //     method: 'DELETE',
+            // })
+            deleteTodo({ id })
                 .then(() => {
                     return fetchAndRenderTasks()
                 })
@@ -44,25 +46,26 @@ export const initAddTaskListener = () => {
         button.disabled = true
         button.textContent = 'создание задачи...'
 
-        fetch('https://wedev-api.sky.pro/api/todos', {
-            method: 'POST',
-            body: JSON.stringify(newTask),
-        })
-            .then((response) => {
-                if (response.status === 201) {
-                    return response.json()
-                } else {
-                    if (response.status === 500) {
-                        throw new Error('Сервер упал')
-                    }
+        // fetch('https://wedev-api.sky.pro/api/v2/todos', {
+        //     method: 'POST',
+        //     body: JSON.stringify(newTask),
+        // })
+        getTodos(newTask)
+            // .then((response) => {
+            //     if (response.status === 201) {
+            //         return response.json()
+            //     } else {
+            //         if (response.status === 500) {
+            //             throw new Error('Сервер упал')
+            //         }
 
-                    if (response.status == 400) {
-                        throw new Error('Вы допустили ошибку')
-                    }
+            //         if (response.status == 400) {
+            //             throw new Error('Вы допустили ошибку')
+            //         }
 
-                    throw new Error('что-то пошло не так')
-                }
-            })
+            //         throw new Error('что-то пошло не так')
+            //     }
+            // })
             .then(() => {
                 return fetchAndRenderTasks()
             })
