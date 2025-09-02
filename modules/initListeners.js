@@ -1,4 +1,4 @@
-import { deleteTodo, getTodos } from './api.js'
+import { deleteTodo, getTodos, postTodo } from './api.js'
 import { fetchAndRenderTasks } from './fetchAndRenderTasks.js'
 
 export const initDeleteListeners = () => {
@@ -43,6 +43,9 @@ export const initAddTaskListener = () => {
             text: input.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
         }
 
+        console.log("\nЭто новая задача:");
+        console.log(newTask);
+
         button.disabled = true
         button.textContent = 'создание задачи...'
 
@@ -50,23 +53,40 @@ export const initAddTaskListener = () => {
         //     method: 'POST',
         //     body: JSON.stringify(newTask),
         // })
-        getTodos(newTask)
-            // .then((response) => {
-            //     if (response.status === 201) {
-            //         return response.json()
-            //     } else {
-            //         if (response.status === 500) {
-            //             throw new Error('Сервер упал')
-            //         }
+        getTodos()
+            //     .then((response) => {
+            //         if (response.status === 201) {
+            //             return response.json()
+            //         } else {
+            //             if (response.status === 500) {
+            //                 throw new Error('Сервер упал')
+            //             }
 
-            //         if (response.status == 400) {
-            //             throw new Error('Вы допустили ошибку')
-            //         }
+            //             if (response.status == 400) {
+            //                 throw new Error('Вы допустили ошибку')
+            //             }
 
-            //         throw new Error('что-то пошло не так')
-            //     }
-            // })
-            .then(() => {
+            //             throw new Error('что-то пошло не так')
+            //         }
+            //     })
+            .then((data) => {
+                console.log("\nЭто data в getTodos в initAddTaskListener:");
+                console.log(data);
+                // if (response.status === 201 || response.status === 200) {
+                //     console.log("\nЭто response.status: ", response.status);
+                //     return fetchAndRenderTasks()
+                // } else {
+                //     if (response.status === 500) {
+                //         throw new Error('Сервер упал')
+                //     }
+
+                //     if (response.status == 400) {
+                //         throw new Error('Вы допустили ошибку')
+                //     }
+
+                //     throw new Error('что-то пошло не так, response.status: ', response.status)
+                // }
+
                 return fetchAndRenderTasks()
             })
             .then(() => {
@@ -79,5 +99,7 @@ export const initAddTaskListener = () => {
                 button.disabled = false
                 button.textContent = 'Добавить'
             })
+
+        // postTodo(newTask);
     })
 }
